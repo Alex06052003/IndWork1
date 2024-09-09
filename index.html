@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./assets/favicon.png" type="image/png" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Excel файл -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+
+    <!-- .pdf файл -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js" defer></script>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <script type="module" src="./js/index.js" defer></script>
+
+    <title>IndWork 1</title>
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div class="popup"></div>
+        <div class="container d-flex">
+            <div class="workspace d-flex">
+                <h2 class="workspace-title">Уважаемые <input type="text" class="workspace-input__name input data-input"
+                        placeholder="Наименование">!
+                </h2>
+                <p class="workspace-text">Сообщаем вам, что <input type="date"
+                        class="workspace-input__date input data-input"> года
+                    состоится
+                    семинар по
+                    внедрению новых
+                    образовательных технологий. Мероприятие будет проходить в формате круглого стола с участием ведущих
+                    экспертов в данной области.
+                </p>
+                <p class="workspace-text">Для участия необходимо зарегистрироваться до <input type="date"
+                        class="workspace-input__date input data-input"> года. Заявки на
+                    участие
+                    принимаются по электронной почте <input type="text" class="workspace-input__mail input data-input"
+                        placeholder="Email">. В заявке необходимо указать:</p>
+                <ul class="workspace-list d-flex">
+                    <li class="workspace-item">Ваши ФИО;</li>
+                    <li class="workspace-item">Должность и место работы;</li>
+                    <li class="workspace-item">Контактный телефон;</li>
+                    <li class="workspace-item">Краткое описание вашего опыта работы с образовательными технологиями.
+                    </li>
+                </ul>
+                <p class="workspace-text">Мероприятие пройдет в конференц-зале учебного корпуса №<input type="number"
+                        class="workspace-input__number input data-input" placeholder="Номер">. Время начала – <input
+                        type="time" class="workspace-input__time input data-input">.
+                </p>
+                <p class="workspace-text">Ждём вашего активного участия и будем рады видеть вас на семинаре!</p>
+            </div>
+            <div class="workspace-actions">
+                <button type="button" class="btn btn-secondary">Сбросить</button>
+                <button type="button" class="btn btn-primary">Предпросмотр</button>
+            </div>
+            <div class="preview-page">
+                <button class="close-btn"></button>
+                <div class="preview d-flex">
+                    <h2 class="preview-title">Уважаемые <span></span>!</h2>
+                    <p class="preview-text">Сообщаем вам, что <span></span> года состоится семинар по
+                        внедрению новых
+                        образовательных технологий. Мероприятие будет проходить в формате круглого стола с участием
+                        ведущих
+                        экспертов в данной области.</p>
+                    <p class="preview-text">Для участия необходимо зарегистрироваться до <span></span>
+                        года. Заявки
+                        на
+                        участие
+                        принимаются по электронной почте <span></span>. В заявке необходимо указать:</p>
+                    <ul class="preview-list">
+                        <li class="preview-item">Ваши ФИО;</li>
+                        <li class="preview-item">Должность и место работы;</li>
+                        <li class="preview-item">Контактный телефон;</li>
+                        <li class="preview-item">Краткое описание вашего опыта работы с образовательными технологиями.
+                        </li>
+                    </ul>
+                    <p class="preview-text">Мероприятие пройдет в конференц-зале учебного корпуса №<span></span>. Время
+                        начала –
+                        <span></span>.
+                    </p>
+                    <p class="preview-text">Ждём вашего активного участия и будем рады видеть вас на семинаре!</p>
+                </div>
+                <div class="preview-page-actions">
+                    <button type="button" class="btn btn-danger">.pdf</button>
+                    <button type="button" class="btn btn-success">Excel</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+</body>
+
+</html>
