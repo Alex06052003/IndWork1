@@ -133,69 +133,45 @@ btnPdf.addEventListener("click", () => {
 });
 
 // Выгрузка Excel файла
-btnExcel.addEventListener("click", () => {
-    // Создаем новый объект Workbook
-    const workbook = XLSX.utils.book_new();
+btnExcel.addEventListener("click", async () => {
+    // Создаем новый Workbook
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Текст");
 
-    // Изменяем внешний вид даты
-    const date1 = editDate(1);
-    const date2 = editDate(2);
+    // Добавляем данные
+    worksheet.addRow([`Уважаемые ${data[0].value}!`]).font = { name: "Arial", size: 12, bold: true };
+    worksheet.addRow([""]);
+    worksheet.addRow([`Сообщаем вам, что ${editDate(1)} года состоится семинар по внедрению новых образовательных технологий. Мероприятие будет проходить в формате круглого стола с участием ведущих экспертов в данной области.`]);
+    worksheet.addRow([""]);
+    worksheet.addRow([`Для участия необходимо зарегистрироваться до ${editDate(2)} года. Заявки на участие принимаются по электронной почте ${data[3].value}. В заявке необходимо указать:`]);
+    worksheet.addRow([""]);
+    worksheet.addRow(["", "Ваши ФИО;"]);
+    worksheet.addRow(["", "Должность и место работы;"]);
+    worksheet.addRow(["", "Контактный телефон;"]);
+    worksheet.addRow(["", "Краткое описание вашего опыта работы с образовательными технологиями."]);
+    worksheet.addRow([""]);
+    worksheet.addRow([`Мероприятие пройдет в конференц-зале учебного корпуса №${data[4].value}. Время начала – ${data[5].value}.`]);
+    worksheet.addRow([""]);
+    worksheet.addRow(["Ждём вашего активного участия и будем рады видеть вас на семинаре!"]);
 
-    // Создаем данные, которые нужно сохранить
-    const excelData = [
-        [`Уважаемые ${data[0].value}!`],
-        [""],
-        [
-            `Сообщаем вам, что ${date1} года состоится семинар по внедрению новых образовательных технологий. Мероприятие будет проходить в формате круглого стола с участием ведущих экспертов в данной области.`,
-        ],
-        [""],
-        [
-            `Для участия необходимо зарегистрироваться до ${date2} года. Заявки на участие принимаются по электронной почте ${data[3].value}. В заявке необходимо указать:`,
-        ],
-        [""],
-        [[""], "Ваши ФИО;"],
-        [[""], "Должность и место работы;"],
-        [[""], "Контактный телефон;"],
-        [
-            [""],
-            "Краткое описание вашего опыта работы с образовательными технологиями.",
-        ],
-        [""],
-        [
-            `Мероприятие пройдет в конференц-зале учебного корпуса №${data[4].value}. Время начала – ${data[5].value}.`,
-        ],
-        [""],
-        ["Ждём вашего активного участия и будем рады видеть вас на семинаре!"],
-    ];
-
-    // Преобразуем массив данных в рабочий лист Excel
-    const worksheet = XLSX.utils.aoa_to_sheet(excelData);
-
-    // Настраиваем стили для обычных ячеек с Times New Roman
-    const normalStyle = {
-        font: { name: "Times New Roman", sz: 12 }, // Шрифт Times New Roman, размер 12
-        alignment: { wrapText: true, vertical: "center", horizontal: "left" }, // Перенос текста, выравнивание
-    };
-
-    // Настраиваем стили для жирных ячеек
-    const boldStyle = {
-        font: { name: "Times New Roman", sz: 12, bold: true }, // Шрифт Times New Roman, размер 12, жирный
-        alignment: { wrapText: true, vertical: "center", horizontal: "left" },
-    };
-
-    // Применяем стили ко всем ячейкам
-    Object.keys(worksheet).forEach((cell) => {
-        if (cell[0] !== "!") {
-            worksheet[cell].s = normalStyle;
-        }
+    // Применяем стиль ко всем ячейкам
+    worksheet.eachRow({ includeEmpty: true }, function(row, rowNumber) {
+        row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
+            cell.font = { name: "Arial", size: 12 }; // Применяем шрифт Arial, размер 12
+            cell.alignment = { wrapText: false, vertical: "top", horizontal: "left" };
+        });
     });
 
     // Применяем жирный стиль к первой строке
-    worksheet["A1"].s = boldStyle;
+    worksheet.getRow(1).font = { name: "Times New Roman", size: 12, bold: true };
 
-    // Добавляем лист в книгу
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Текст");
-
-    // Сохраняем файл как Excel (.xlsx)
-    XLSX.writeFile(workbook, "text.xlsx");
+    // Генерируем и сохраняем файл Excel
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "formatted_text.xlsx";
+    a.click();
+    URL.revokeObjectURL(url);
 });
